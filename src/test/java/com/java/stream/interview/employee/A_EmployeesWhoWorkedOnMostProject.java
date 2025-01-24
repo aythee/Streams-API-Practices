@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
  */
 class A_EmployeesWhoWorkedOnMostProject {
   @Test
-  @Disabled()
   public void employeeWorkedOnMostProject() {
     final var projectsThatEmp1HasWorkedOn =
         List.of(

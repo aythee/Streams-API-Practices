@@ -11,7 +11,6 @@ import java.util.Map;
 
 class E_EmployeesBelongToEachDept {
   @Test
-  @Disabled
   void employeesBelongToEachDept() {
     final var employees = DummyData.randomEmployees();
     final var mySolution = InterviewProblemSolutions.getEmployeesBelongToEachDepartment(employees);

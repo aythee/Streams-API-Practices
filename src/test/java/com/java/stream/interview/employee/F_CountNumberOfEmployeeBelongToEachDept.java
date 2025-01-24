@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 class F_CountNumberOfEmployeeBelongToEachDept {
   @Test
-  @Disabled
   void countNumberOfEmployeeBelongToEachDept() {
     final var employees = DummyData.randomEmployees();
     final var mySolution =

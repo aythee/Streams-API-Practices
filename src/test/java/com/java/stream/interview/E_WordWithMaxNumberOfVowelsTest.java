@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * */
 class E_WordWithMaxNumberOfVowelsTest {
 
-  @Disabled
+
   @Test
   void testNumberOfVowels() {
     var input = Faker.instance().chuckNorris().fact();

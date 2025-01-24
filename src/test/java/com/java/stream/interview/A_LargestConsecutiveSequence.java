@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
  * */
 class A_LargestConsecutiveSequence {
   @Test
-  @Disabled
   void largestConsecutiveSequence() {
     final var input = List.of(1, 12, 33, 4, 2, 3, 99, 100, 101, 102, 104, 98);
     final var mySolution = InterviewProblemSolutions.largestConsecutiveSequence(input);

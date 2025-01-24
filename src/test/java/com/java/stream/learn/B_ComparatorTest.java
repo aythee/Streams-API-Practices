@@ -25,7 +25,7 @@ class B_ComparatorTest {
     @Test
     @Disabled
     public void comparator01() {
-        java.util.Comparator<String> compareByLength = null; // TODO
+        java.util.Comparator<String> compareByLength = (s1, s2)-> s1.length() - s2.length(); // TODO
 
         Assertions.assertTrue(compareByLength.compare("FOUR", "TWO") > 0);
         Assertions.assertTrue(compareByLength.compare("ONE", "SEVEN") < 0);
@@ -44,7 +44,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator02() {
-        Comparator<String> compareByLengthThenAlphabetical = null; // TODO
+        Comparator<String> compareByLengthThenAlphabetical =  (s1, s2) -> s1.length()-s2.length() == 0 ?  s1.compareTo(s2) : s1.length()-s2.length(); // TODO
 
         Assertions.assertTrue(compareByLengthThenAlphabetical.compare("FOUR", "TWO") > 0);
         Assertions.assertTrue(compareByLengthThenAlphabetical.compare("ONE", "SEVEN") < 0);
@@ -65,7 +65,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator03() {
-        Comparator<Person> comparebyLastName = null; // TODO
+        Comparator<Person> comparebyLastName = Comparator.comparing(Person::lastName); // TODO
 
         Assertions.assertTrue(comparebyLastName.compare(michael, rod) < 0);
         Assertions.assertTrue(comparebyLastName.compare(paul, paul) == 0);
@@ -84,7 +84,8 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator04() {
-        Comparator<Person> comparebyLastNameThenFirstName = null; // TODO
+        Comparator<Person> comparebyLastNameThenFirstName = Comparator.comparing(Person::name) .thenComparing(Person::lastName);
+//                (p1, p2) -> p1.lastName().equals(p2.lastName()) ? p1.name().compareTo(p2.name()) : p1.lastName().compareTo(p2.lastName()) ; // TODO
 
         Assertions.assertTrue(comparebyLastNameThenFirstName.compare(michael, rod) < 0);
         Assertions.assertTrue(comparebyLastNameThenFirstName.compare(paul, paul) == 0);
@@ -104,7 +105,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator05() {
-        Comparator<Person> comparebyLastNameThenFirstNameReversed = null; // TODO
+        Comparator<Person> comparebyLastNameThenFirstNameReversed = Comparator.comparing(Person::name).thenComparing(Person::lastName).reversed(); // TODO
 
         assertFalse(comparebyLastNameThenFirstNameReversed.compare(michael, rod) < 0);
         Assertions.assertTrue(comparebyLastNameThenFirstNameReversed.compare(paul, paul) == 0);
@@ -122,7 +123,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator06() {
-        Comparator<Person> comparebyLastNameThenFirstNameWithNull = null; // TODO
+        Comparator<Person> comparebyLastNameThenFirstNameWithNull = Comparator.nullsLast(Comparator.comparing(Person::name).thenComparing(Person::lastName)); // TODO
 
         Assertions.assertTrue(comparebyLastNameThenFirstNameWithNull.compare(michael, rod) < 0);
         Assertions.assertTrue(comparebyLastNameThenFirstNameWithNull.compare(paul, paul) == 0);
@@ -141,7 +142,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator07() {
-        Comparator<Person> comparebyAge = null; // TODO
+        Comparator<Person> comparebyAge = Comparator.comparing(Person::age); // TODO
 
         Assertions.assertTrue(comparebyAge.compare(michael, rod) < 0);
         Assertions.assertTrue(comparebyAge.compare(paul, paul) == 0);

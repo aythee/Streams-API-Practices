@@ -17,7 +17,6 @@ Q12) Given an array of integers (2,34,54,23,33,20,59,11,19,37 )
 */
 class C_GroupingOfNumbersTest {
   @Test
-  @Disabled
   void testGroupingOfNumbers() {
     final var randomIntegers =
         List.of(

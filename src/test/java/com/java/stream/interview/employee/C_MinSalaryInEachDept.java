@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 class C_MinSalaryInEachDept {
   @Test
-  @Disabled
   void testMinSalaryInEachDepartment() {
 
     final var employees = DummyData.randomEmployees();

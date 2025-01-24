@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
  * */
 class D_UniqueEmailCountTest {
   @Test
-  @Disabled
   void findUniqueDomainsWithCount() {
     final var employees =
         List.of(

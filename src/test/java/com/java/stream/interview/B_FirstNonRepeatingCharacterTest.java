@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 class B_FirstNonRepeatingCharacterTest {
 
   @Test
-  @Disabled
   void testFirstNonRepeatingCharacter() {
     final var input =
         "The quick brown fox jumps over the lazy dog, find the first non repeated character.";

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class D_SumOfSalaryInEachDept {
   @Test
-  @Disabled
   void sumOfSalariesInEachDepartment() {
     final var employees = DummyData.randomEmployees();
     final var mySolution = InterviewProblemSolutions.getSumOfSalariesOnEachDepartment(employees);

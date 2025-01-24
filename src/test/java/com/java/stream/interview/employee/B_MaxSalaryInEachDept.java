@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 class B_MaxSalaryInEachDept {
 
   @Test
-  @Disabled
   void testMaxSalaryInEachDept() {
 
     final var employees = DummyData.randomEmployees();
