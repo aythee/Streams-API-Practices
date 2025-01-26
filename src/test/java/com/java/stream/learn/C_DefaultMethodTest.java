@@ -30,6 +30,7 @@ class C_DefaultMethodTest {
                 new StringBuilder("charlie"));
 
         // TODO write code to modify sbList
+        sbList.forEach(f-> f.append("new"));
 
         Assertions.assertEquals(List.of("alfanew", "bravonew", "charlienew"),
                 sbList.stream()
@@ -50,6 +51,7 @@ class C_DefaultMethodTest {
         List<String> list = new ArrayList<>(Arrays.asList(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
+        list = list.stream().filter(sb-> sb.length() % 2 == 0).collect(Collectors.toList());
         // TODO write code to modify list
 
         Assertions.assertEquals(List.of("alfa", "echo"), list);
@@ -68,6 +70,7 @@ class C_DefaultMethodTest {
         List<String> list = Arrays.asList(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
+        list = list.stream().map(String::toUpperCase).collect(Collectors.toList());
         // TODO code to modify list
 
         Assertions.assertEquals(List.of("ALFA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"),
@@ -90,7 +93,7 @@ class C_DefaultMethodTest {
         map.put(1, new StringBuilder("alfa"));
         map.put(2, new StringBuilder("bravo"));
         map.put(3, new StringBuilder("charlie"));
-
+        map.replaceAll((key, value) -> value.append(key));
         // TODO write code to modify map
 
         Assertions.assertEquals(3, map.size());
@@ -116,6 +119,8 @@ class C_DefaultMethodTest {
         map.put(1, "alfa");
         map.put(2, "bravo");
         map.put(3, "charlie");
+
+        map.replaceAll((key, value) -> value+key);
 
         // TODO write code to modify map
 
@@ -143,7 +148,7 @@ class C_DefaultMethodTest {
         Map<Integer, List<String>> result = new TreeMap<>();
 
         // TODO write code to populate result
-
+        result = list.stream().collect(Collectors.groupingBy(String::length));
         Assertions.assertEquals(Map.of( 5, List.of("bison"),
                         6, List.of("avocet"),
                         7, List.of("bustard"),
@@ -169,7 +174,9 @@ class C_DefaultMethodTest {
                 "alligator", "bushbaby", "chimpanzee",
                 "avocet", "bustard", "capuchin");
         Map<Character, String> result = new TreeMap<>();
-
+        result = list.stream().collect(Collectors.groupingBy(s -> s.charAt(0),
+                Collectors.joining(":")));
+        System.out.println(result);
         // TODO write code to populate result
 
         Assertions.assertEquals(Map.of('a', "aardvark:alligator:avocet",
@@ -197,6 +204,7 @@ class C_DefaultMethodTest {
                 "c", "charlie",
                 "d", "delta"));
 
+        keys.forEach(k-> map.putIfAbsent(k, ""));
         // TODO write code to fix the map
 
         Assertions.assertEquals(Map.of("a", "alfa",
@@ -231,6 +239,7 @@ class C_DefaultMethodTest {
                 "g", ""));
 
         // TODO write code to fix the map
+        keys.forEach(key-> map.remove(key,""));
 
         Assertions.assertEquals(Map.of("a", "alfa",
                         "b", "bravo",
@@ -261,6 +270,7 @@ class C_DefaultMethodTest {
                 "f", "",
                 "g", ""));
 
+        keys.forEach(key-> map.replace(key,"",key));
         // TODO write code to fix the map
 
         Assertions.assertEquals(Map.of("a", "alfa",
@@ -291,6 +301,10 @@ class C_DefaultMethodTest {
                 "b", "bravo",
                 "c", "charlie",
                 "d", "delta"));
+        keys.forEach(key -> {
+            map.computeIfPresent(key, (str,k) -> k.toUpperCase());
+            map.computeIfAbsent(key, (k) -> k);
+        });
 
         // TODO write code transform the map
 
@@ -326,7 +340,12 @@ class C_DefaultMethodTest {
                 "e", "",
                 "f", "",
                 "g", ""));
-
+        keys.forEach(key -> map.compute(key, (k, v) -> {
+            if (v == null || v.isEmpty()) {
+                return null; // Remove entry if the value is empty
+            }
+            return v.toUpperCase(); // Convert non-empty values to upper case
+        }));
         // TODO write code transform the map
 
         Assertions.assertEquals(Map.of("a", "ALFA",

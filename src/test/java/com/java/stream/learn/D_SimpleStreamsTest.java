@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -26,7 +30,10 @@ class D_SimpleStreamsTest {
         List<String> input = List.of(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
-        List<String> result = null; // TODO
+        List<String> result = input.stream()
+                .filter(s -> s.length()% 2 !=0)
+                .map(String::toUpperCase)
+                .collect(Collectors.toList()); // TODO
 
         Assertions.assertEquals(List.of("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
     }
@@ -50,8 +57,8 @@ class D_SimpleStreamsTest {
     public void d2_joinStreamRange() {
         List<String> input = List.of(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
-
-        String result = ""; // TODO
+        String result = input.stream().skip(2).limit(3).map(s-> String.valueOf(s.charAt(1))).collect(Collectors.joining(","));
+//         ""; // TODO
 
         Assertions.assertEquals("h,e,c", result);
     }
@@ -75,6 +82,7 @@ class D_SimpleStreamsTest {
     @Test @Disabled
     public void d3_countLinesInFile() throws IOException {
         long count = 0; // TODO
+        count = reader.lines().count();
 
         Assertions.assertEquals(14, count);
     }
@@ -96,7 +104,7 @@ class D_SimpleStreamsTest {
     @Test @Disabled
     public void d4_findLengthOfLongestLine() throws IOException {
         int longestLength = 0; // TODO
-
+        longestLength = reader.lines().map(String::length).max(Integer::compareTo).get();
         Assertions.assertEquals(53, longestLength);
     }
     // Hint 1:
@@ -122,6 +130,7 @@ class D_SimpleStreamsTest {
     @Test @Disabled
     public void d5_findLongestLine() throws IOException {
         String longest = null; // TODO
+        longest = reader.lines().max(Comparator.comparing(String::length)).get();
 
         Assertions.assertEquals("Feed'st thy light's flame with self-substantial fuel,", longest);
     }
@@ -143,9 +152,10 @@ class D_SimpleStreamsTest {
     public void d6_selectLongestWords() {
         List<String> input = List.of(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+        int size = input.stream().max(Comparator.comparing(String::length))
+                .map(String::length).get(); // TODO
 
-        List<String> result = null; // TODO
-
+        List<String> result = input.stream().filter(s -> s.length()== size).collect(Collectors.toList());
         Assertions.assertEquals(List.of("charlie", "foxtrot"), result);
     }
     // Hint:
@@ -161,8 +171,11 @@ class D_SimpleStreamsTest {
     public void d7_selectByLengthAndPosition() {
         List<String> input = List.of(
                 "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
-
-        List<String> result = null; // TODO
+        List<String> result =
+                IntStream.range(0, input.size())
+                        .filter(i -> input.get(i).length() > i)
+                        .mapToObj(input::get).collect(Collectors.toList());
+//         null; // TODO
 
         Assertions.assertEquals(List.of("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
     }
@@ -184,7 +197,7 @@ class D_SimpleStreamsTest {
     @BeforeEach
     public void z_setUpBufferedReader() throws IOException {
         reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8);
+                Paths.get("D:\\Dev\\IdeaProjects\\Streams-API-Practices\\src\\test\\resources\\SonnetI.txt"), StandardCharsets.UTF_8);
     }
 
     @AfterEach

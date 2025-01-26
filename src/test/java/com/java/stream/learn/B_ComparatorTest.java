@@ -163,7 +163,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator08() {
-        IntBinaryOperator intCompare = null; // TODO
+        IntBinaryOperator intCompare = Integer::compare; // TODO
 
         Assertions.assertTrue(intCompare.applyAsInt(0, 1) < 0);
         Assertions.assertTrue(intCompare.applyAsInt(1, 1) == 0);
@@ -183,7 +183,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator09() {
-        IntBinaryOperator intCompare = null; // TODO
+        IntBinaryOperator intCompare = Integer::compare; // TODO
 
         Assertions.assertTrue(intCompare.applyAsInt(0, 1) < 0);
         Assertions.assertTrue(intCompare.applyAsInt(1, 1) == 0);
@@ -210,7 +210,7 @@ class B_ComparatorTest {
      */
     @Test @Disabled
     public void comparator10() {
-        DoubleToIntBiFunction doubleCompare = null; // TODO
+        DoubleToIntBiFunction doubleCompare = (x,y) -> Double.compare(x,y); // TODO
 
         Assertions.assertTrue(doubleCompare.applyAsInt(0.0, 1.0) < 0);
         Assertions.assertTrue(doubleCompare.applyAsInt(1.0, 1.0) == 0);

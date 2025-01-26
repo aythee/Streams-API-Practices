@@ -7,12 +7,12 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.AbstractCollection;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 
@@ -31,7 +31,7 @@ class E_IntermediateStreamsTest {
         List<String> input = List.of("alfa", "bravo", "charlie");
 
         List<Character> result = null; // TODO
-
+        result = input.stream().flatMap(line-> line.chars().mapToObj(c-> (char) c)).collect(Collectors.toList());
         Assertions.assertEquals("[a, l, f, a, b, r, a, v, o, c, h, a, r, l, i, e]", result.toString());
         Assertions.assertTrue(result.stream().allMatch(x -> x instanceof Character));
     }
@@ -60,6 +60,9 @@ class E_IntermediateStreamsTest {
     public void e2_listOfAllWords() throws IOException {
         List<String> output = null; // TODO
 
+    output = reader.lines()
+                .flatMap(st -> Arrays.stream(st.split(SPLIT_PATTERN.pattern())))
+                        .collect(Collectors.toList());
         Assertions.assertEquals(
                 List.of(
                         "From", "fairest", "creatures", "we", "desire", "increase",
@@ -93,7 +96,12 @@ class E_IntermediateStreamsTest {
     @Test @Disabled
     public void e3_longLowerCaseSortedWords() throws IOException {
         List<String> output = null; // TODO
-
+        output = reader.lines()
+                .flatMap(word-> Arrays.stream(word.split(SPLIT_PATTERN.pattern())))
+                .filter(word -> word.length()>= 8)
+                .map(String::toLowerCase)
+                .sorted()
+                .collect(Collectors.toList());
         Assertions.assertEquals(
                 List.of(
                         "abundance", "beauty's", "contracted", "creatures",
@@ -117,6 +125,12 @@ class E_IntermediateStreamsTest {
     public void e4_longLowerCaseReverseSortedWords() throws IOException {
         List<String> result = null; // TODO
 
+        result = reader.lines()
+                .flatMap(word -> Arrays.stream(word.split(SPLIT_PATTERN.pattern())))
+                .filter(word-> word.length()>= 8)
+                .map(word-> word.toLowerCase())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
         Assertions.assertEquals(
                 List.of(
                         "substantial", "ornament", "niggarding", "increase",
@@ -139,6 +153,14 @@ class E_IntermediateStreamsTest {
     public void e5_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
         List<String> result = null; // TODO
 
+        result = reader.lines()
+                .flatMap(word -> Arrays.stream(word.split(SPLIT_PATTERN.pattern())))
+                .map(word-> word.toLowerCase())
+                .distinct()
+                .sorted(Comparator.comparing(String::length)
+                                        .thenComparing(Comparator.naturalOrder())
+                )
+                .collect(Collectors.toList());
         Assertions.assertEquals(
                 List.of(
                         "a", "as", "be", "by", "in", "or", "to", "we",
@@ -172,7 +194,7 @@ class E_IntermediateStreamsTest {
     @Test @Disabled
     public void e6_bigFactorial() {
         BigInteger result = BigInteger.ONE; // TODO
-
+        result = LongStream.range(result.longValue(), 22).mapToObj(BigInteger::valueOf).reduce(BigInteger::multiply).get();
         Assertions.assertEquals(new BigInteger("51090942171709440000"), result);
     }
     // Hint 1:
@@ -195,6 +217,9 @@ class E_IntermediateStreamsTest {
     @Test @Disabled
     public void e7_getLastWord() throws IOException {
         String result = null; // TODO
+//        reader.lines()
+//                .flatMap(word -> Arrays.stream(word.split(SPLIT_PATTERN.pattern())))
+//                        .sorted().skip()
 
         Assertions.assertEquals("thee", result);
     }
@@ -265,7 +290,7 @@ class E_IntermediateStreamsTest {
     @BeforeEach
     public void z_setUpBufferedReader() throws IOException {
         reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8);
+                Paths.get("D:\\Dev\\IdeaProjects\\Streams-API-Practices\\src\\test\\resources\\SonnetI.txt"), StandardCharsets.UTF_8);
     }
 
     @AfterEach
